@@ -1,0 +1,28 @@
+pipeline {
+    agent any
+
+    environment {
+        // Define environment variables if needed
+        DOCKER_IMAGE_NAME = "telecom"
+        DOCKER_IMAGE_TAG = "tc" // You can use any desired tag
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                // Checkout your source code from the version control system (e.g., Git)
+                // For example:
+                git 'https://github.com/dr-alok-tiwari/Telecom.git'
+            }
+        }
+        stage('Build and run Docker Image') {
+            steps {
+                // Build your Docker image using Dockerfile in the project directory
+                script {
+                    sh "docker build -t telecom:tc ."
+                    sh 'docker run telecom:tc'
+                }
+            }
+        }        
+    }
+}
